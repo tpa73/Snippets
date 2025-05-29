@@ -4,11 +4,12 @@ from django.contrib.auth.models import User
 
 LANGS: tuple[tuple[str, str]] = (
     ("py", "Python"),
-    ("js", "Javascript"),
-    ("go", "Goland"),
+    ("js", "JavaScript"),
+    ("go", "Golang"),
     ("cpp", "C++"),
     ("html", "HTML"),
 )
+
 
 class Snippet(models.Model):
     name = models.CharField(max_length=100)

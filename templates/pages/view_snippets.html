@@ -19,7 +19,7 @@
                         <th scope="col">Язык</th>
                         <th scope="col">Дата создания</th>
                         <th scope="col">Действия</th>
-                        <th scope="col">User</th>
+                        <th scope="col">Пользователь</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,15 +40,20 @@
                             {# https://docs.djangoproject.com/en/5.2/ref/templates/builtins/#std-templatefilter-date #}
                             <td>{{ snippet.creation_date | date:"d F Y H:i:s"}}</td>
                             <td>
-                                <form action="{% url "snippet-delete" snippet.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                                <div style="display: flex; flex-direction: row;">
+                                    <a href="{% url "snippet-edit" snippet.id %}" class="btn btn-info">Edit</a>
+                                    &nbsp;&nbsp;
+                                    <form action="{% url "snippet-delete" snippet.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
                             </td>
+                            <td>{{ snippet.user.username }} </td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="5"> Нет доступных сниппетов! </td>
+                            <td colspan="6"> Нет доступных сниппетов! </td>
                         </tr>
                     {% endfor %}   
                     </tbody>

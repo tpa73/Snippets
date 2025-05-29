@@ -1,3 +1,4 @@
+
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
@@ -10,8 +11,9 @@ urlpatterns = [
     path('snippets/<int:snippet_id>', views.snippet_detail, name='snippet-detail'),
     path('snippets/<int:snippet_id>/delete', views.snippet_delete, name='snippet-delete'),
     path('snippets/<int:snippet_id>/edit', views.snippet_edit, name='snippet-edit'),
-    path('snippets/<int:snippet_id>/edit', views.snippet_edit, name='snippet-edit'),
+    path('snippets/search', views.snippet_search, name='snippet-search'),
     path('login', views.login, name='login'),
     path('logout', views.logout, name='logout'),
-    #path('snippets/create', views.create_snippet, name='create-snippet'),
+    path('snippets/<int:user_id>/view', views.my_snippets, name='my-snippets'),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

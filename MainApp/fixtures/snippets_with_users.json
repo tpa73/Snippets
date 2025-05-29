@@ -1,0 +1,81 @@
+
+[
+    {
+        "model": "MainApp.snippet",
+        "pk": 1,
+        "fields": {
+            "name": "First snippet",
+            "lang": "js",
+            "code": "console.log(\"Hello world\")",
+            "creation_date": "2025-05-29T07:12:23.974Z",
+            "user": null
+        }
+    },
+    {
+        "model": "MainApp.snippet",
+        "pk": 2,
+        "fields": {
+            "name": "Second Snippet Change",
+            "lang": "js",
+            "code": "console.log(\"Change Hi\")",
+            "creation_date": "2025-05-29T07:13:20.358Z",
+            "user": null
+        }
+    },
+    {
+        "model": "MainApp.snippet",
+        "pk": 3,
+        "fields": {
+            "name": "First snippet by form",
+            "lang": "py",
+            "code": "print(\"check\")",
+            "creation_date": "2025-05-29T09:05:05.152Z",
+            "user": null
+        }
+    },
+    {
+        "model": "MainApp.snippet",
+        "pk": 4,
+        "fields": {
+            "name": "chg C++ snippet",
+            "lang": "cpp",
+            "code": "cout << \"hello chg\"",
+            "creation_date": "2025-05-29T09:15:56.694Z",
+            "user": null
+        }
+    },
+    {
+        "model": "MainApp.snippet",
+        "pk": 5,
+        "fields": {
+            "name": "List snippet",
+            "lang": "py",
+            "code": "print([1, 2, True])",
+            "creation_date": "2025-05-29T09:43:41.333Z",
+            "user": null
+        }
+    },
+    {
+        "model": "MainApp.snippet",
+        "pk": 6,
+        "fields": {
+            "name": "First admin'n snippet",
+            "lang": "py",
+            "code": "print(\"Hello from admin\")",
+            "creation_date": "2025-05-29T14:03:14.697Z",
+            "user": 1
+        }
+    },
+    {
+        "model": "MainApp.snippet",
+        "pk": 7,
+        "fields": {
+            "name": "User1's snippet",
+            "lang": "js",
+            "code": "console.log(\"User1\")",
+            "creation_date": "2025-05-29T14:03:49.599Z",
+            "user": 2
+        }
+    }
+    ]
+    
