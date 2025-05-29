@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.forms import SnippetForm
 
 from MainApp.models import Snippet
-
+from django.contrib import auth
 
 
 def index_page(request):
@@ -74,11 +74,33 @@ def snippet_edit(request, snippet_id):
        context["form"] = form
        return render(request, 'pages/add_snippet.html', context)
     elif request.method == 'POST':
-        form = SnippetForm(request.POST, instance=snippet)
-        if form.is_valid():
-            form.save()
-    else:
-        pass
-
+        data_form = request.POST
+        #for key,
+        snippet.name = data_form["name"]
+        snippet.code = data_form["code"]
+        snippet.save()
+    #     form = SnippetForm(request.POST, instance=snippet)
+    #     if form.is_valid():
+    #         form.save()
+    # else:
+    #     pass
 
     return redirect("snippets-list")  # URL для списка сниппетов
+
+def snippet_search(request):
+    snippet_id = request.Get.get("snippet_id")
+    if snippet_id:
+        return redirect("snippet-detail", snippet_id=snippet_id)
+    
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        print("username =", username)
+        print("password =", password)
+        return redirect('home')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('home')

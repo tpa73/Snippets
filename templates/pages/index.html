@@ -28,11 +28,11 @@
             <div class="col">
                 <hr>
                 <h4>Найти сниппет по номеру</h4>
-                <form action='' id="view_snippet_form">
+                <form action='{%url "snippet-search" snippet.id %}' id="view_snippet_form">
                     <div class="form-group row">
                         <label for="snippet_id" class="col-sm-2 col-form-label col-form-label-lg">Номер:</label>
                         <div class="col-sm-8">
-                            <input type="number" class="form-control form-control-lg" id="snippet_id"
+                            <input type="number" name="snippet_id" class="form-control form-control-lg" id="snippet_id"
                                    placeholder="введите число">
                         </div>
                         <div class="col-sm-2">
