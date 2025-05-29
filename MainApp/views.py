@@ -1,7 +1,9 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.forms import SnippetForm
+
 from MainApp.models import Snippet
+
 
 
 def index_page(request):
@@ -57,9 +59,26 @@ def snippet_detail(request, snippet_id):
 
 def snippet_delete(request, snippet_id):
     #snippet = Snippet.objects.get(id=snippet_id)
-    res = Snippet.objects.filter(id=snippet_id).delete()
+    #res = Snippet.objects.filter(id=snippet_id).delete()
+    if request.method =="GET" or request.method =="POST":
+        snippet = get_object_or_404(Snippet,id=snippet_id)
+        snippet.delete()
     return redirect("snippets-list")  # URL для списка сниппетов
 
 
 def snippet_edit(request, snippet_id):
-    pass
+    context = {"pagename": "Редактирование сниппета"}
+    snippet = get_object_or_404(Snippet,id=snippet_id)
+    if request.method == 'GET':
+       form = SnippetForm(instance=snippet)
+       context["form"] = form
+       return render(request, 'pages/add_snippet.html', context)
+    elif request.method == 'POST':
+        form = SnippetForm(request.POST, instance=snippet)
+        if form.is_valid():
+            form.save()
+    else:
+        pass
+
+
+    return redirect("snippets-list")  # URL для списка сниппетов
