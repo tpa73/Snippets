@@ -1,13 +1,13 @@
 from django.forms import (
-    CheckboxInput,
-    ModelForm,
-    TextInput,
-    Textarea,
+    CheckboxInput, 
+    ModelForm, 
+    TextInput, 
+    Textarea, 
     CharField,
     PasswordInput,
     ValidationError
 )
-from MainApp.models import Snippet
+from MainApp.models import Comment, Snippet
 from django.contrib.auth.models import User
 
 # Описание возможностей по настройке форм
@@ -34,20 +34,18 @@ class SnippetForm(ModelForm):
             "public": CheckboxInput(attrs={"value": "True"})
         }
 
-
-
     def clean_name(self):
         """Метод для проверки длины поля <name>"""
         snippet_name = self.cleaned_data.get("name")
         if snippet_name is not None and len(snippet_name) > 3:
             return snippet_name
         raise ValidationError("Snippet's name is too short.")
-    
+
 
 class UserRegistrationForm(ModelForm):
     class Meta:
         model = User
-        fields = ["username", "email"]
+        fields = ["username", "email", "is_staff"]
 
     password1 = CharField(label="password", widget=PasswordInput)
     password2 = CharField(label="password confirm", widget=PasswordInput)
@@ -65,3 +63,18 @@ class UserRegistrationForm(ModelForm):
         if commit:
             user.save()
         return user
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["text"]
+        labels = {"text": ""}
+        widgets = {
+            "text": Textarea(attrs={
+                "placeholder": "Комментарий для сниппета",
+                "rows": 5,
+                "class": "form-control",
+                "style": "max-width:300px",   
+            }),
+        }

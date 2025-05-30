@@ -11,11 +11,11 @@
 
         <div class="row">
             <div class="col">
-               <form action="{%url "register"%}" method="post">
-                {%csrf_token%}
-                {{form.as_p}}
-                <input type="submit" value="создать пользователя">
-               </form>
+                <form action="{% url "register" %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p}}
+                    <input type="submit" value="Создать пользователя">
+                </form>
             </div>
         </div>
     </div>

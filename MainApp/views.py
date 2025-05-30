@@ -1,10 +1,10 @@
-
-from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, render, redirect
-from MainApp.forms import SnippetForm, UserRegistrationForm
+from MainApp.forms import SnippetForm, UserRegistrationForm, CommentForm
 from MainApp.models import Snippet
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from http import HTTPStatus
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
@@ -70,6 +70,7 @@ def snippet_detail(request, snippet_id):
             )
     else:
         context["snippet"] = snippet
+        context["comment_form"] = CommentForm()
         return render(request, "pages/snippet_detail.html", context)
 
 
@@ -164,17 +165,34 @@ def logout(request):
 
 
 def create_user(request):
-    context={}
+    context = {'pagename': 'Регистрация нового пользователя'}
+    # Создаем пустую форму при запросе GET
     if request.method == "GET":
         form = UserRegistrationForm()
 
-    # Получаем данные из формы и на их основе создаем новый сниппет, сохраняя его в БД
+    # Получаем данные из формы, валидируем и на их основе создаем нового пользователя, сохраняя его в БД
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("home")
-    context["form"] = form
-    return render(request, "pages/registration.html", context)
 
-                
+    context["form"] = form
+    return render(request, 'pages/registration.html', context)
+
+
+@login_required
+def create_comment(request):
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            snippet_id = request.POST.get("snippet_id")
+            snippet = Snippet.objects.get(id=snippet_id)
+            comment = comment_form.save(commit=False)
+            comment.author = request.user
+            comment.snippet = snippet
+            comment.save()
+            # URL path snippet_id = form snippet_id
+            return redirect("snippet-detail", snippet_id=snippet_id)
+    
+    return HttpResponse(status=HTTPStatus.NO_CONTENT)
